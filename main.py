@@ -16,7 +16,6 @@ class Analyzer:
     def update(self):
         can_data = self.conn.get_data()
         for key in can_data:
-            bytes_array = can_data[key].encode()
             if key == 0:
                 pass
 

@@ -19,8 +19,8 @@ class DataTable(ttk.Treeview):
         self.all_delete()
         count = 0
         for key in can_data:
-            can_data_bytes = can_data[key].encode
-            self.insert(parent='', index='end', iid=count, values=[key, can_data[key]])
+
+            self.insert(parent='', index='end', iid=count, values=[str(key), str(can_data[key])])
             count += 1
 
 
@@ -65,7 +65,7 @@ class Gui(tk.Tk):
 
     def update(self):
         self.callback()
-        self.after(500, self.update)
+        self.after(100, self.update)
 
     def show(self):
         self.mainloop()
