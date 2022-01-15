@@ -45,7 +45,7 @@ class Connection:
             if can_data[1] is None:
                 continue
             self.lock.acquire()
-            self.dict[int(can_data[0], base=10)] = int(can_data[1], base=2)
+            self.dict[int(can_data[0], base=16)] = can_data[1]
             self.lock.release()
 
     def get_data(self):

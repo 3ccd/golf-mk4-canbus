@@ -20,21 +20,25 @@ class DataTable(ttk.Treeview):
         count = 0
         for key in can_data:
 
-            self.insert(parent='', index='end', iid=count, values=[str(key), str(can_data[key])])
+            self.insert(parent='', index='end', iid=count, values=[key, can_data[key]])
             count += 1
 
 
 class Gui(tk.Tk):
 
-    def __init__(self, window_size, title, conn):
+    def __init__(self, title, conn):
         super().__init__()
         self.conn = conn
         self.callback = None
 
-        self.geometry(window_size)
         self.title(title)
 
-        self.table = DataTable(self, columns=['rid', 'data'], height=30)
+        self.data_frame = tk.Frame(self, pady=10, padx=10, relief=tk.GROOVE, bd=2)
+        self.control_frame = tk.Frame(self, pady=10, padx=10, relief=tk.GROOVE, bd=2)
+        self.data_frame.grid(row=0, column=0)
+        self.control_frame.grid(row=0, column=1)
+
+        self.table = DataTable(self.data_frame, columns=['rid', 'data'], height=30)
         self.table.column('#0', width=50)
         self.table.column('rid', width=100)
         self.table.column('data', width=500)
@@ -42,12 +46,12 @@ class Gui(tk.Tk):
         self.table.heading('data', text='Data')
         self.table.pack()
 
-        self.label = ttk.Label(self, text='textLabel')
+        self.label = ttk.Label(self.control_frame, text='textLabel', width=40)
         self.label.pack()
 
-        open_button = ttk.Button(self, text='Open', command=self.conn.open)
+        open_button = ttk.Button(self.control_frame, text='Open', command=self.conn.open)
         open_button.pack()
-        start_button = ttk.Button(self, text='Start', command=self.start)
+        start_button = ttk.Button(self.control_frame, text='Start', command=self.start)
         start_button.pack()
 
     def get_table(self):
